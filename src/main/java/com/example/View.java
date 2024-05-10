@@ -1,12 +1,20 @@
 package com.example;
 
+import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.AbstractTableModel;
+
+import com.example.model.Model;
+import com.example.model.Package;
 
 public class View implements PropertyChangeListener {
 
@@ -24,7 +32,7 @@ public class View implements PropertyChangeListener {
     public View(Model model) {
 
         jframe = new JFrame("Counter");
-        jframe.setSize(100, 120);
+        jframe.setSize(500, 520);
         jframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jframe.setLocationRelativeTo(null);
 
@@ -46,7 +54,14 @@ public class View implements PropertyChangeListener {
         JButton boton2 = new JButton("down");
         jframe.add("down", boton2);
         boton2.addActionListener(e -> Update.update(Msg.DOWN, model));
-    }
+
+
+        // Create and display the GUI
+        ObjectTableModel tableModel = new ObjectTableModel(model.getPackages());
+        JTable table = new JTable(tableModel);
+
+        JScrollPane scrollPane = new JScrollPane(table);
+        jframe.add(scrollPane, BorderLayout.CENTER);    }
 
     /**
      * View function
@@ -61,4 +76,50 @@ public class View implements PropertyChangeListener {
     public JFrame getJframe() {
         return this.jframe;
     }
+
+    class ObjectTableModel extends AbstractTableModel {
+        private List<Package> objectList;
+        private String[] columnNames = { "packageId", "destinationAddress", "weight", "length", "width", "height" };
+
+        public ObjectTableModel(List<Package> objectList) {
+            this.objectList = objectList;
+        }
+
+        @Override
+        public int getRowCount() {
+            return objectList.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return columnNames.length;
+        }
+
+        @Override
+        public Object getValueAt(int rowIndex, int columnIndex) {
+            Package object = objectList.get(rowIndex);
+            switch (columnIndex) {
+                case 0:
+                    return object.getPackageId();
+                case 1:
+                    return object.getDestinationAddress();
+                case 2:
+                    return object.getWeight();
+                case 3:
+                    return object.getLength();
+                case 4:
+                    return object.getWidth();
+                case 5:
+                    return object.getHeight();
+                default:
+                    return null;
+            }
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            return columnNames[column];
+        }
+    }
+
 }

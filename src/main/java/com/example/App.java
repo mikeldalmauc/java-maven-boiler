@@ -3,6 +3,8 @@ package com.example;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import com.example.model.Model;
+import com.github.javafaker.Faker;
 
 /**
  * Hello world!
@@ -10,7 +12,11 @@ import javax.swing.SwingUtilities;
  */
 public class App 
 {
+    // unique instance for fake data creation
+    private static Faker fakerInstance; 
+    
     public static void main( String[] args ){
+        fakerInstance = Faker.instance();
 
         counterProgram();
     }  
@@ -25,5 +31,9 @@ public class App
             view.getJframe().setVisible(true);
             view.getJframe().setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         });
+    }
+
+    public static Faker getFaker(){
+        return fakerInstance;
     }
 }

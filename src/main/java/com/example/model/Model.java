@@ -1,7 +1,10 @@
-package com.example;
+package com.example.model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Model {
 
@@ -19,13 +22,21 @@ public class Model {
 	 */
 	private Integer count;
 	
+	private List<Package> packages;
+	
 	public Model(){
 		this.listeners = new PropertyChangeSupport(this);
-	
+		
 		/**
 		 * Model initial data
 		 */
+		
 		this.count = 0;
+
+		// Create test packages
+		this.packages = Stream.iterate(0, i -> i + 1).limit(100)
+		.map(i -> Package.createFakePackage())
+		.collect(Collectors.toList());
 	}
 
     /*
@@ -40,4 +51,8 @@ public class Model {
     public Integer getCount(){
         return this.count;
     }
+
+	public List<Package> getPackages(){
+		return this.packages;
+	}
 }
