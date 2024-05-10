@@ -3,7 +3,6 @@ package com.example;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import org.apache.log4j.BasicConfigurator;
 
 /**
  * Hello world!
@@ -12,9 +11,6 @@ import org.apache.log4j.BasicConfigurator;
 public class App 
 {
     public static void main( String[] args ){
-
-        // Initialize log4J appenders
-        BasicConfigurator.configure();
 
         counterProgram();
     }  

@@ -1,10 +1,11 @@
 package com.example;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Update {
 
-    private static Logger log = Logger.getLogger(Update.class);
+    private static Logger log = LogManager.getLogger();
 
     public static void update(Msg msg, Model model){
 
