@@ -8,10 +8,10 @@ public class Model {
 	/*
 	 * Support to add change listeners
 	 */
-	private PropertyChangeSupport support;
+	private PropertyChangeSupport listeners;
 	
 	public void setListener(PropertyChangeListener view) {
-		support.addPropertyChangeListener(view);
+		listeners.addPropertyChangeListener(view);
 	}
 
     /**
@@ -20,22 +20,21 @@ public class Model {
 	private Integer count;
 	
 	public Model(){
-		this.support = new PropertyChangeSupport(this);
+		this.listeners = new PropertyChangeSupport(this);
 	
 		/**
 		 * Model initial data
 		 */
 		this.count = 0;
-	
 	}
 
     /*
-	 * This can be improved and be made with a tag
+	 * This will notify of a change to property change listeners
 	 */
 	public void setCount(Integer count) {
 		Integer old = this.count;
 		this.count = count;
-		support.firePropertyChange("count", old, this.count);;
+		listeners.firePropertyChange("count", old, this.count);;
 	}
 
     public Integer getCount(){
